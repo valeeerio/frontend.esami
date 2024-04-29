@@ -1,0 +1,69 @@
+CREATE TABLE `test_esame`.`chef` (
+  `idchef` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `cognome` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `specializzazione` VARCHAR(45) NULL,
+  `cellulare` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idchef`),
+  UNIQUE INDEX `idchef_UNIQUE` (`idchef` ASC) VISIBLE);
+
+
+CREATE TABLE `test_esame`.`cliente` (
+  `idcliente` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `cognome` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `cellulare` VARCHAR(45) NOT NULL,
+  `intolleranze` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idcliente`));
+
+
+CREATE TABLE `test_esame`.`ristorante` (
+  `idristorante` INT NOT NULL AUTO_INCREMENT,
+  `nome` VARCHAR(45) NOT NULL,
+  `indirizzo` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`idristorante`));
+
+
+CREATE TABLE `test_esame`.`prenotazioni` (
+  `idprenotazione` INT NOT NULL AUTO_INCREMENT,
+  `note` VARCHAR(45) NOT NULL,
+  `data` DATETIME NOT NULL,
+  `coperti` INT NOT NULL,
+  `ristorante` INT NOT NULL,
+  `cliente` INT NOT NULL,
+  PRIMARY KEY (`idprenotazione`),
+  INDEX `ristorante_idx` (`ristorante` ASC) VISIBLE,
+  INDEX `cliente_idx` (`cliente` ASC) VISIBLE,
+  CONSTRAINT `ristorante`
+    FOREIGN KEY (`ristorante`)
+    REFERENCES `test_esame`.`ristorante` (`idristorante`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `cliente`
+    FOREIGN KEY (`cliente`)
+    REFERENCES `test_esame`.`cliente` (`idcliente`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+
+INSERT INTO `esami`.`chef` (`idchef`, `nome`, `cognome`, `email`, `specializzazione`, `cellulare`) VALUES ('1', 'Valerio', 'Mortella', 'test@email.com', 'cuoco', '1234567890');
+INSERT INTO `esami`.`chef` (`idchef`, `nome`, `cognome`, `email`, `specializzazione`, `cellulare`) VALUES ('2', 'Claudio', 'Bianco', 'test@email.com', 'cuoco', '1234567890');
+INSERT INTO `esami`.`chef` (`idchef`, `nome`, `cognome`, `email`, `specializzazione`, `cellulare`) VALUES ('3', 'Andrea', 'Salatino', 'test@email.com', 'cuoco', '1234567890');
+INSERT INTO `esami`.`chef` (`idchef`, `nome`, `cognome`, `email`, `specializzazione`, `cellulare`) VALUES ('4', 'Mauro', 'DeFeudis', 'test@email.com', 'cuoco', '1234567890');
+INSERT INTO `esami`.`chef` (`idchef`, `nome`, `cognome`, `email`, `specializzazione`, `cellulare`) VALUES ('5', 'Nicola', 'deToma', 'test@email.com', 'cuoco', '1234567890');
+
+
+INSERT INTO `esami`.`cliente` (`idcliente`, `nome`, `cognome`, `email`, `cellulare`, `intolleranze`) VALUES ('1', 'Valerio', 'Mortella', 'test@email.com', '1234567890', 'lattosio');
+INSERT INTO `esami`.`cliente` (`idcliente`, `nome`, `cognome`, `email`, `cellulare`, `intolleranze`) VALUES ('2', 'Claudio', 'Ceo', 'test@email.com', '1234567890', 'nulla');
+
+
+
+INSERT INTO `esami`.`ristorante` (`idristorante`, `nome`, `indirizzo`) VALUES ('1', 'Rosso Pomodoro', 'via Roma 1');
+INSERT INTO `esami`.`ristorante` (`idristorante`, `nome`, `indirizzo`) VALUES ('2', 'Mc Donald', 'via Napoli 2');
+
+
+INSERT INTO `esami`.`prenotazioni` (`idprenotazione`, `note`, `data`, `coperti`, `ristorante`, `cliente`) VALUES ('1', 'nota 1', '2024-01-01T13:00', '4', '1', '1');
+INSERT INTO `esami`.`prenotazioni` (`idprenotazione`, `note`, `data`, `coperti`, `ristorante`, `cliente`) VALUES ('2', 'nota 2', '2024-02-02T20:30', '2', '2', '1');
